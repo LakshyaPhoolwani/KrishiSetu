@@ -12,12 +12,17 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "prisma:format": "prisma format --schema prisma/schema.prisma",
     "prisma:validate": "prisma validate --schema prisma/schema.prisma",
-    "prisma:db-push": "prisma db push --schema prisma/schema.prisma"
+    "prisma:db-push": "prisma db push --schema prisma/schema.prisma",
+    "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@clerk/express": "^2.1.69",
+    "@google/genai": "^2.23.0",
     "@prisma/client": "^6.19.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

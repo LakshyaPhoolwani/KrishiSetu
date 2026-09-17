@@ -7,9 +7,6 @@ Completed:
 - Phase 0 monorepo foundation and developer tooling.
 
 Pending phases:
-- Phase 1 - Backend + Database Foundation
-- Phase 2 - Authentication + Roles
-- Phase 3 - Farmer + Crop/Lot
 - Phase 4 - Market Data
 - Phase 5 - Buyer + Demand
 - Phase 6 - Net Realisation Engine
@@ -27,7 +24,7 @@ Pending phases:
 - Phase 18 - Integration Testing + Bug Fixing
 
 ## Phase 1
-Status: IN PROGRESS
+Status: COMPLETED
 
 Scope:
 - Prisma schema and client
@@ -36,5 +33,79 @@ Scope:
 - Database health endpoint
 - RLS preparation and documentation
 
+## Phase 2
+Status: COMPLETED
+
+Scope:
+- Clerk backend authentication
+- Database-backed identity
+- Role and ownership authorization foundation
+- Clerk user lifecycle webhooks
+- Protected identity/profile endpoints
+
+## Phase 3
+Status: COMPLETED
+
+Scope:
+- Farmer profile management
+- Farmer-owned farms
+- Crop reference data
+- Farmer-owned produce lots
+- Validation, pagination, lifecycle, and ownership authorization
+
+## Phase 4
+Status: COMPLETED
+
+Scope:
+- Market and market-price read APIs
+- Deterministic provider validation, normalization, and idempotent ingestion
+- Demo source distinction, distance calculation, and price statistics
+
+Limitations:
+- No official live market provider is integrated until a verified API and access method are available.
+
+## Phase 5
+Status: COMPLETED
+
+Scope:
+- Buyer profiles
+- Private BuyerDemand lifecycle and ownership APIs
+
 ## Current rule
-Do not start Phase 2 until Phase 1 has been tested and committed.
+## Phase 6
+Status: COMPLETED
+
+Scope:
+- Deterministic Net Realisation calculation engine
+- Decimal-safe cost and spoilage breakdown
+- Farmer-owned persisted calculation records
+
+Limitations:
+- No buyer matching, transport API, logistics integration, or price forecasting.
+
+## Current rule
+## Phase 7
+Status: COMPLETED
+
+Scope:
+- Stateless buyer-demand compatibility evaluation
+- Transparent eligibility reasons and farmer-owned matching API
+
+Limitations:
+- No AI ranking, automatic selling, offers, transactions, or buyer selection.
+
+## Current rule
+## Phase 8
+Status: COMPLETED
+
+Scope:
+- Authenticated backend AI chat endpoint
+- Strict registered tool dispatcher over deterministic services
+- Prompt-injection, financial-safety, DEMO/LIVE, and loop protections
+
+Limitations:
+- Conversation history is not persisted.
+- Live Gemini verification requires configured credentials.
+
+## Current rule
+Do not start Phase 9 until Phase 8 has been tested and accepted.
