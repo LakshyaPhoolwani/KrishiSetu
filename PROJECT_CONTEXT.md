@@ -23,9 +23,9 @@ Current technology:
 - Node.js + Express backend
 - Supabase PostgreSQL
 - Prisma
+- Clerk authentication and identity mapping
 
 Future technology:
-- Clerk
 - OpenAI
 - Maps
 - Weather

@@ -10,6 +10,7 @@ The project follows a monorepo layout with separate workspaces for the web app, 
 - Mobile app: React Native + Expo + TypeScript
 - Backend: Node.js + Express + TypeScript
 - Database: Supabase PostgreSQL + Prisma
+- Authentication: Clerk
 - Shared packages: types, validation, API client, and constants
 
 ## Tech stack
@@ -110,8 +111,10 @@ database health check.
 
 ## Current phase
 
-Phase 1 is the backend and Supabase PostgreSQL database foundation stage. No
-production business features are implemented yet.
+Phase 2 is the Clerk authentication and authorization foundation stage. No
+production business features are implemented yet. See
+[docs/authentication.md](docs/authentication.md) for the backend flow and
+webhook setup.
 
 ## Collaboration rules
 

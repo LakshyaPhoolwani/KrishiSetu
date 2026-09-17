@@ -27,7 +27,7 @@ Pending phases:
 - Phase 18 - Integration Testing + Bug Fixing
 
 ## Phase 1
-Status: IN PROGRESS
+Status: COMPLETED
 
 Scope:
 - Prisma schema and client
@@ -36,5 +36,15 @@ Scope:
 - Database health endpoint
 - RLS preparation and documentation
 
+## Phase 2
+Status: IN PROGRESS
+
+Scope:
+- Clerk backend authentication
+- Database-backed identity
+- Role and ownership authorization foundation
+- Clerk user lifecycle webhooks
+- Protected identity/profile endpoints
+
 ## Current rule
-Do not start Phase 2 until Phase 1 has been tested and committed.
+Do not start Phase 3 until Phase 2 has been tested and committed.

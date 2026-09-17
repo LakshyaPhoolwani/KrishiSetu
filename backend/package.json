@@ -16,8 +16,10 @@
     "prisma:db-push": "prisma db push --schema prisma/schema.prisma"
   },
   "dependencies": {
+    "@clerk/express": "^2.1.69",
     "@prisma/client": "^6.19.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

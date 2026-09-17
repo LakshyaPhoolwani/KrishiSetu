@@ -21,3 +21,7 @@
 19. Do not change public API contracts without explicit instruction.
 20. Before major changes, perform impact analysis first.
 21. If asked to implement a feature outside the current phase, stop and report that the feature belongs to a later phase.
+22. Never trust client-provided identity, Clerk IDs, roles, or authorization fields.
+23. Verify Clerk authentication server-side and verify every Clerk webhook signature.
+24. Never expose Clerk secrets or Supabase service credentials.
+25. Do not create insecure RLS policies or bypass authentication for convenience.
