@@ -25,6 +25,14 @@ Current technology:
 - Prisma
 - Clerk authentication and identity mapping
 - Farmer, farm, crop, and lot management foundation
+- Market and market-price data foundation with deterministic provider normalization
+
+Phase 4 architecture:
+- Authenticated market and historical market-price read APIs
+- Admin-only demo ingestion
+- Provider abstraction with explicit LIVE/DEMO source metadata
+- INR-per-quintal normalization and source-record idempotency
+- Reusable Haversine distance and deterministic price-statistics utilities
 
 Future technology:
 - OpenAI

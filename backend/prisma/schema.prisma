@@ -50,6 +50,15 @@ enum QuantityUnit {
   TON
 }
 
+enum PriceSourceType {
+  LIVE
+  DEMO
+}
+
+enum PriceUnit {
+  INR_PER_QUINTAL
+}
+
 model User {
   id          String     @id @default(cuid())
   clerkUserId String?    @unique
@@ -73,7 +82,7 @@ model Farmer {
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   fpoId             String?
   fpo               FPO?     @relation(fields: [fpoId], references: [id], onDelete: SetNull)
-  preferredLanguage  String?
+  preferredLanguage String?
   district          String?
   state             String?
   latitude          Float?
@@ -88,55 +97,56 @@ model Farmer {
 }
 
 model FPO {
-  id             String         @id @default(cuid())
+  id             String       @id @default(cuid())
   name           String
-  registrationId String?        @unique
+  registrationId String?      @unique
   phone          String?
   email          String?
   district       String?
   state          String?
   latitude       Float?
   longitude      Float?
-  status         EntityStatus   @default(PENDING)
+  status         EntityStatus @default(PENDING)
   farmers        Farmer[]
   lots           Lot[]
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 
   @@map("fpos")
 }
 
 model Farm {
-  id         String    @id @default(cuid())
-  farmerId   String
-  farmer     Farmer    @relation(fields: [farmerId], references: [id], onDelete: Cascade)
-  name       String
-  address    String?
-  village    String?
-  district   String?
-  state      String?
-  pincode    String?
-  latitude   Float?
-  longitude  Float?
-  area       Decimal   @db.Decimal(12, 4)
-  areaUnit   AreaUnit
-  lots       Lot[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  farmerId  String
+  farmer    Farmer   @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  name      String
+  address   String?
+  village   String?
+  district  String?
+  state     String?
+  pincode   String?
+  latitude  Float?
+  longitude Float?
+  area      Decimal  @db.Decimal(12, 4)
+  areaUnit  AreaUnit
+  lots      Lot[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([farmerId])
   @@map("farms")
 }
 
 model Crop {
-  id         String   @id @default(cuid())
-  name       String
-  variety    String?
-  category   String?
-  season     String?
-  lots       Lot[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String        @id @default(cuid())
+  name      String
+  variety   String?
+  category  String?
+  season    String?
+  lots      Lot[]
+  prices    MarketPrice[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@index([name])
   @@index([category])
@@ -144,9 +154,9 @@ model Crop {
 }
 
 model Buyer {
-  id           String         @id @default(cuid())
-  userId       String         @unique
-  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String        @id @default(cuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   businessName String
   phone        String?
   email        String?
@@ -154,69 +164,83 @@ model Buyer {
   state        String?
   latitude     Float?
   longitude    Float?
-  status       EntityStatus   @default(PENDING)
+  status       EntityStatus  @default(PENDING)
   demands      BuyerDemand[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@map("buyers")
 }
 
 model Market {
-  id          String         @id @default(cuid())
-  name        String
-  district    String?
-  state       String?
-  latitude    Float?
-  longitude   Float?
-  status      EntityStatus   @default(ACTIVE)
-  prices      MarketPrice[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id        String        @id @default(cuid())
+  name      String
+  mandiCode String?       @unique
+  address   String?
+  district  String?
+  state     String?
+  latitude  Float?
+  longitude Float?
+  active    Boolean       @default(true)
+  status    EntityStatus  @default(ACTIVE)
+  prices    MarketPrice[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
-  @@index([state, district])
+  @@index([state])
+  @@index([district])
+  @@index([active])
   @@map("markets")
 }
 
 model MarketPrice {
-  id              String   @id @default(cuid())
-  marketId        String
-  market          Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
-  cropIdentifier  String
-  price           Decimal  @db.Decimal(18, 3)
-  unit            String
-  priceDate       DateTime
-  source          String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String          @id @default(cuid())
+  marketId       String
+  market         Market          @relation(fields: [marketId], references: [id], onDelete: Restrict)
+  cropId         String
+  crop           Crop            @relation(fields: [cropId], references: [id], onDelete: Restrict)
+  priceDate      DateTime
+  minPrice       Decimal?        @db.Decimal(18, 3)
+  maxPrice       Decimal?        @db.Decimal(18, 3)
+  modalPrice     Decimal?        @db.Decimal(18, 3)
+  normalizedUnit PriceUnit       @default(INR_PER_QUINTAL)
+  sourceUnit     String
+  source         String
+  sourceType     PriceSourceType
+  sourceRecordId String
+  fetchedAt      DateTime
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
-  @@index([marketId, cropIdentifier, priceDate])
+  @@unique([source, sourceRecordId])
+  @@index([marketId, cropId, priceDate])
+  @@index([source, sourceType])
   @@map("market_prices")
 }
 
 model Lot {
-  id                  String        @id @default(cuid())
-  lotCode             String        @unique
+  id                  String       @id @default(cuid())
+  lotCode             String       @unique
   farmerId            String
-  farmer              Farmer        @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  farmer              Farmer       @relation(fields: [farmerId], references: [id], onDelete: Cascade)
   farmId              String
-  farm                Farm          @relation(fields: [farmId], references: [id], onDelete: Restrict)
+  farm                Farm         @relation(fields: [farmId], references: [id], onDelete: Restrict)
   cropId              String
-  crop                Crop          @relation(fields: [cropId], references: [id], onDelete: Restrict)
+  crop                Crop         @relation(fields: [cropId], references: [id], onDelete: Restrict)
   fpoId               String?
-  fpo                 FPO?          @relation(fields: [fpoId], references: [id], onDelete: SetNull)
-  quantity            Decimal       @db.Decimal(18, 3)
+  fpo                 FPO?         @relation(fields: [fpoId], references: [id], onDelete: SetNull)
+  quantity            Decimal      @db.Decimal(18, 3)
   quantityUnit        QuantityUnit
   sowingDate          DateTime?
   expectedHarvestDate DateTime?
   actualHarvestDate   DateTime?
-  cultivationArea     Decimal?      @db.Decimal(12, 4)
+  cultivationArea     Decimal?     @db.Decimal(12, 4)
   cultivationAreaUnit AreaUnit?
   qualityGrade        String?
   qualityNotes        String?
-  status              LotStatus     @default(DRAFT)
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @updatedAt
+  status              LotStatus    @default(DRAFT)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
 
   @@index([farmerId, status, createdAt])
   @@index([farmId, status])
@@ -225,22 +249,22 @@ model Lot {
 }
 
 model BuyerDemand {
-  id                String       @id @default(cuid())
-  buyerId           String
-  buyer             Buyer        @relation(fields: [buyerId], references: [id], onDelete: Cascade)
-  cropIdentifier    String
-  requiredQuantity  Decimal      @db.Decimal(18, 3)
-  unit              String
+  id                 String       @id @default(cuid())
+  buyerId            String
+  buyer              Buyer        @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+  cropIdentifier     String
+  requiredQuantity   Decimal      @db.Decimal(18, 3)
+  unit               String
   qualityRequirement String?
-  requiredBy        DateTime?
-  targetDistrict    String?
-  targetState       String?
-  targetLatitude    Float?
-  targetLongitude   Float?
-  offeredPrice      Decimal?     @db.Decimal(18, 3)
-  status            EntityStatus @default(ACTIVE)
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
+  requiredBy         DateTime?
+  targetDistrict     String?
+  targetState        String?
+  targetLatitude     Float?
+  targetLongitude    Float?
+  offeredPrice       Decimal?     @db.Decimal(18, 3)
+  status             EntityStatus @default(ACTIVE)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
 
   @@index([buyerId, cropIdentifier])
   @@map("buyer_demands")

@@ -12,8 +12,10 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "prisma:format": "prisma format --schema prisma/schema.prisma",
     "prisma:validate": "prisma validate --schema prisma/schema.prisma",
-    "prisma:db-push": "prisma db push --schema prisma/schema.prisma"
+    "prisma:db-push": "prisma db push --schema prisma/schema.prisma",
+    "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@clerk/express": "^2.1.69",

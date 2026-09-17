@@ -6,6 +6,7 @@ import { healthRouter } from './routes/index.js';
 import { usersRouter } from './routes/users.js';
 import { webhooksRouter } from './routes/webhooks.js';
 import { farmerManagementRouter } from './routes/farmerManagement.js';
+import { marketDataRouter } from './routes/marketData.js';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use('/api', healthRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api', farmerManagementRouter);
+app.use('/api', marketDataRouter);
 app.use(errorHandler);
 
 export default app;

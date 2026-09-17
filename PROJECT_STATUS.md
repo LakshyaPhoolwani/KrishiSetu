@@ -44,7 +44,7 @@ Scope:
 - Protected identity/profile endpoints
 
 ## Phase 3
-Status: IN PROGRESS
+Status: COMPLETED
 
 Scope:
 - Farmer profile management
@@ -53,5 +53,16 @@ Scope:
 - Farmer-owned produce lots
 - Validation, pagination, lifecycle, and ownership authorization
 
+## Phase 4
+Status: IN PROGRESS
+
+Scope:
+- Market and market-price read APIs
+- Deterministic provider validation, normalization, and idempotent ingestion
+- Demo source distinction, distance calculation, and price statistics
+
+Limitations:
+- No official live market provider is integrated until a verified API and access method are available.
+
 ## Current rule
-Do not start Phase 4 until Phase 3 has been tested and committed.
+Do not start Phase 5 until Phase 4 has been tested and accepted.
