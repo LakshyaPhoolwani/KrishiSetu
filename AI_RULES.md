@@ -11,7 +11,7 @@
 9. Do not invent market prices.
 10. Do not calculate financial or business values in the LLM layer.
 11. Important calculations must be deterministic backend logic.
-12. MongoDB will become the application source of truth.
+12. Supabase PostgreSQL will be the application source of truth through Prisma.
 13. Clerk will handle authentication in a later phase.
 14. Blockchain is an audit and provenance layer, not proof of physical crop quality.
 15. Every feature must have tests where applicable.

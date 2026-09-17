@@ -9,6 +9,7 @@ The project follows a monorepo layout with separate workspaces for the web app, 
 - Web app: React + TypeScript + Vite
 - Mobile app: React Native + Expo + TypeScript
 - Backend: Node.js + Express + TypeScript
+- Database: Supabase PostgreSQL + Prisma
 - Shared packages: types, validation, API client, and constants
 
 ## Tech stack
@@ -20,7 +21,8 @@ The project follows a monorepo layout with separate workspaces for the web app, 
 - React Native / Expo
 - Node.js
 - Express
-- MongoDB (future)
+- Supabase PostgreSQL
+- Prisma
 - Clerk (future)
 
 ## Monorepo structure
@@ -99,9 +101,17 @@ cp .env.example .env
 
 The current foundation only requires placeholders for local development and does not include production secrets.
 
+## Database setup
+
+Phase 1 uses Supabase PostgreSQL through Prisma. See
+[docs/database.md](docs/database.md) for environment variables, the
+non-migration `prisma db push` policy, schema details, RLS planning, and the
+database health check.
+
 ## Current phase
 
-Phase 0 is the project foundation stage. No production business features are implemented yet.
+Phase 1 is the backend and Supabase PostgreSQL database foundation stage. No
+production business features are implemented yet.
 
 ## Collaboration rules
 

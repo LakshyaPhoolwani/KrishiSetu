@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  FARMER
+  FPO
+  BUYER
+  ADMIN
+  QUALITY_ASSESSOR
+  LOGISTICS
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum EntityStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+enum LotStatus {
+  DRAFT
+  AVAILABLE
+  INACTIVE
+}
+
+model User {
+  id          String     @id @default(cuid())
+  clerkUserId String?    @unique
+  name        String?
+  email       String?    @unique
+  phone       String?
+  role        Role       @default(FARMER)
+  status      UserStatus @default(ACTIVE)
+  farmer      Farmer?
+  buyer       Buyer?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([role])
+  @@map("users")
+}
+
+model Farmer {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fpoId             String?
+  fpo               FPO?     @relation(fields: [fpoId], references: [id], onDelete: SetNull)
+  preferredLanguage  String?
+  district          String?
+  state             String?
+  latitude          Float?
+  longitude         Float?
+  lots              Lot[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([fpoId])
+  @@map("farmers")
+}
+
+model FPO {
+  id             String         @id @default(cuid())
+  name           String
+  registrationId String?        @unique
+  phone          String?
+  email          String?
+  district       String?
+  state          String?
+  latitude       Float?
+  longitude      Float?
+  status         EntityStatus   @default(PENDING)
+  farmers        Farmer[]
+  lots           Lot[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("fpos")
+}
+
+model Buyer {
+  id           String         @id @default(cuid())
+  userId       String         @unique
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  businessName String
+  phone        String?
+  email        String?
+  district     String?
+  state        String?
+  latitude     Float?
+  longitude    Float?
+  status       EntityStatus   @default(PENDING)
+  demands      BuyerDemand[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@map("buyers")
+}
+
+model Market {
+  id          String         @id @default(cuid())
+  name        String
+  district    String?
+  state       String?
+  latitude    Float?
+  longitude   Float?
+  status      EntityStatus   @default(ACTIVE)
+  prices      MarketPrice[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([state, district])
+  @@map("markets")
+}
+
+model MarketPrice {
+  id              String   @id @default(cuid())
+  marketId        String
+  market          Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  cropIdentifier  String
+  price           Decimal  @db.Decimal(18, 3)
+  unit            String
+  priceDate       DateTime
+  source          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([marketId, cropIdentifier, priceDate])
+  @@map("market_prices")
+}
+
+model Lot {
+  id             String     @id @default(cuid())
+  farmerId       String
+  farmer         Farmer     @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  fpoId          String?
+  fpo            FPO?       @relation(fields: [fpoId], references: [id], onDelete: SetNull)
+  cropIdentifier String
+  quantity       Decimal    @db.Decimal(18, 3)
+  unit           String
+  status         LotStatus  @default(DRAFT)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([farmerId, cropIdentifier, status])
+  @@index([fpoId, cropIdentifier, status])
+  @@map("lots")
+}
+
+model BuyerDemand {
+  id                String       @id @default(cuid())
+  buyerId           String
+  buyer             Buyer        @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+  cropIdentifier    String
+  requiredQuantity  Decimal      @db.Decimal(18, 3)
+  unit              String
+  qualityRequirement String?
+  requiredBy        DateTime?
+  targetDistrict    String?
+  targetState       String?
+  targetLatitude    Float?
+  targetLongitude   Float?
+  offeredPrice      Decimal?     @db.Decimal(18, 3)
+  status            EntityStatus @default(ACTIVE)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([buyerId, cropIdentifier])
+  @@map("buyer_demands")
+}

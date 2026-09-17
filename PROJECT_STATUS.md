@@ -1,10 +1,10 @@
 # Project Status
 
 ## Phase 0
-Status: IN PROGRESS
+Status: COMPLETED
 
 Completed:
-- Nothing initially.
+- Phase 0 monorepo foundation and developer tooling.
 
 Pending phases:
 - Phase 1 - Backend + Database Foundation
@@ -26,5 +26,15 @@ Pending phases:
 - Phase 17 - Admin + Analytics
 - Phase 18 - Integration Testing + Bug Fixing
 
+## Phase 1
+Status: IN PROGRESS
+
+Scope:
+- Prisma schema and client
+- Supabase PostgreSQL configuration
+- Core domain models
+- Database health endpoint
+- RLS preparation and documentation
+
 ## Current rule
-Do not start the next phase until Phase 0 has been tested and committed.
+Do not start Phase 2 until Phase 1 has been tested and committed.

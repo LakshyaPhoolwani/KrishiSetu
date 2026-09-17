@@ -17,11 +17,14 @@ Future roles:
 - Logistics Provider
 - Payment Provider
 
-Future technology:
+Current technology:
 - React web
 - React Native / Expo mobile
 - Node.js + Express backend
-- MongoDB
+- Supabase PostgreSQL
+- Prisma
+
+Future technology:
 - Clerk
 - OpenAI
 - Maps
