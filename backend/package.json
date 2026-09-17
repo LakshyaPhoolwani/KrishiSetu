@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@clerk/express": "^2.1.69",
+    "@google/genai": "^2.23.0",
     "@prisma/client": "^6.19.0",
     "express": "^5.1.0",
     "zod": "^4.6.5"

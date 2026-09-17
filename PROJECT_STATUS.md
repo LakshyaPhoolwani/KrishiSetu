@@ -54,7 +54,7 @@ Scope:
 - Validation, pagination, lifecycle, and ownership authorization
 
 ## Phase 4
-Status: IN PROGRESS
+Status: COMPLETED
 
 Scope:
 - Market and market-price read APIs
@@ -64,5 +64,48 @@ Scope:
 Limitations:
 - No official live market provider is integrated until a verified API and access method are available.
 
+## Phase 5
+Status: COMPLETED
+
+Scope:
+- Buyer profiles
+- Private BuyerDemand lifecycle and ownership APIs
+
 ## Current rule
-Do not start Phase 5 until Phase 4 has been tested and accepted.
+## Phase 6
+Status: COMPLETED
+
+Scope:
+- Deterministic Net Realisation calculation engine
+- Decimal-safe cost and spoilage breakdown
+- Farmer-owned persisted calculation records
+
+Limitations:
+- No buyer matching, transport API, logistics integration, or price forecasting.
+
+## Current rule
+## Phase 7
+Status: COMPLETED
+
+Scope:
+- Stateless buyer-demand compatibility evaluation
+- Transparent eligibility reasons and farmer-owned matching API
+
+Limitations:
+- No AI ranking, automatic selling, offers, transactions, or buyer selection.
+
+## Current rule
+## Phase 8
+Status: COMPLETED
+
+Scope:
+- Authenticated backend AI chat endpoint
+- Strict registered tool dispatcher over deterministic services
+- Prompt-injection, financial-safety, DEMO/LIVE, and loop protections
+
+Limitations:
+- Conversation history is not persisted.
+- Live Gemini verification requires configured credentials.
+
+## Current rule
+Do not start Phase 9 until Phase 8 has been tested and accepted.

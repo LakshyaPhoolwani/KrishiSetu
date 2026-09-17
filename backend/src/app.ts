@@ -7,6 +7,10 @@ import { usersRouter } from './routes/users.js';
 import { webhooksRouter } from './routes/webhooks.js';
 import { farmerManagementRouter } from './routes/farmerManagement.js';
 import { marketDataRouter } from './routes/marketData.js';
+import { buyerDemandRouter } from './routes/buyerDemand.js';
+import { netRealisationRouter } from './routes/netRealisation.js';
+import { buyerMatchingRouter } from './routes/buyerMatching.js';
+import { aiRouter } from './routes/ai.js';
 
 const app = express();
 
@@ -20,6 +24,10 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api', farmerManagementRouter);
 app.use('/api', marketDataRouter);
+app.use('/api', buyerDemandRouter);
+app.use('/api', netRealisationRouter);
+app.use('/api', buyerMatchingRouter);
+app.use('/api', aiRouter);
 app.use(errorHandler);
 
 export default app;

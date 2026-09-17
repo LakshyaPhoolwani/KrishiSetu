@@ -116,7 +116,15 @@ production business features are implemented yet. Phase 3 adds the backend
 Farmer/Farm/Crop/Lot foundation. See
 [docs/authentication.md](docs/authentication.md) for the backend flow and
 webhook setup and [docs/farmer-management.md](docs/farmer-management.md) for
-the Phase 3 API and ownership rules.
+the Phase 3 API and ownership rules. Phase 4 adds authenticated market data
+and Phase 5 adds private buyer demand management. Phase 6 adds the
+backend-only Decimal-safe Net Realisation engine; see
+[docs/net-realisation.md](docs/net-realisation.md) for its formula, ownership
+rules, and calculation breakdown. Phase 7 adds the read-only deterministic
+Buyer Matching engine documented in
+[docs/buyer-matching.md](docs/buyer-matching.md).
+Phase 8 adds the backend-only AI tool-calling foundation documented in
+[docs/ai-agent.md](docs/ai-agent.md).
 
 ## Collaboration rules
 
