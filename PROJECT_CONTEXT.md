@@ -24,6 +24,7 @@ Current technology:
 - Supabase PostgreSQL
 - Prisma
 - Clerk authentication and identity mapping
+- Farmer, farm, crop, and lot management foundation
 
 Future technology:
 - OpenAI

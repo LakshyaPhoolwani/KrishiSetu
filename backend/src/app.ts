@@ -5,6 +5,7 @@ import { authRouter } from './routes/auth.js';
 import { healthRouter } from './routes/index.js';
 import { usersRouter } from './routes/users.js';
 import { webhooksRouter } from './routes/webhooks.js';
+import { farmerManagementRouter } from './routes/farmerManagement.js';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api', healthRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
+app.use('/api', farmerManagementRouter);
 app.use(errorHandler);
 
 export default app;

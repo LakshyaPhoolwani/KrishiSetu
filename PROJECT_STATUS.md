@@ -7,9 +7,6 @@ Completed:
 - Phase 0 monorepo foundation and developer tooling.
 
 Pending phases:
-- Phase 1 - Backend + Database Foundation
-- Phase 2 - Authentication + Roles
-- Phase 3 - Farmer + Crop/Lot
 - Phase 4 - Market Data
 - Phase 5 - Buyer + Demand
 - Phase 6 - Net Realisation Engine
@@ -37,7 +34,7 @@ Scope:
 - RLS preparation and documentation
 
 ## Phase 2
-Status: IN PROGRESS
+Status: COMPLETED
 
 Scope:
 - Clerk backend authentication
@@ -46,5 +43,15 @@ Scope:
 - Clerk user lifecycle webhooks
 - Protected identity/profile endpoints
 
+## Phase 3
+Status: IN PROGRESS
+
+Scope:
+- Farmer profile management
+- Farmer-owned farms
+- Crop reference data
+- Farmer-owned produce lots
+- Validation, pagination, lifecycle, and ownership authorization
+
 ## Current rule
-Do not start Phase 3 until Phase 2 has been tested and committed.
+Do not start Phase 4 until Phase 3 has been tested and committed.

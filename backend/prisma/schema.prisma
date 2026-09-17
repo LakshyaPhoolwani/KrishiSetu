@@ -30,8 +30,24 @@ enum EntityStatus {
 
 enum LotStatus {
   DRAFT
-  AVAILABLE
-  INACTIVE
+  READY_FOR_MARKET
+  LISTED
+  MATCHED
+  SOLD
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+
+enum AreaUnit {
+  ACRE
+  HECTARE
+}
+
+enum QuantityUnit {
+  KG
+  QUINTAL
+  TON
 }
 
 model User {
@@ -62,6 +78,7 @@ model Farmer {
   state             String?
   latitude          Float?
   longitude         Float?
+  farms             Farm[]
   lots              Lot[]
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -87,6 +104,43 @@ model FPO {
   updatedAt      DateTime       @updatedAt
 
   @@map("fpos")
+}
+
+model Farm {
+  id         String    @id @default(cuid())
+  farmerId   String
+  farmer     Farmer    @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  name       String
+  address    String?
+  village    String?
+  district   String?
+  state      String?
+  pincode    String?
+  latitude   Float?
+  longitude  Float?
+  area       Decimal   @db.Decimal(12, 4)
+  areaUnit   AreaUnit
+  lots       Lot[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([farmerId])
+  @@map("farms")
+}
+
+model Crop {
+  id         String   @id @default(cuid())
+  name       String
+  variety    String?
+  category   String?
+  season     String?
+  lots       Lot[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([name])
+  @@index([category])
+  @@map("crops")
 }
 
 model Buyer {
@@ -141,20 +195,32 @@ model MarketPrice {
 }
 
 model Lot {
-  id             String     @id @default(cuid())
-  farmerId       String
-  farmer         Farmer     @relation(fields: [farmerId], references: [id], onDelete: Cascade)
-  fpoId          String?
-  fpo            FPO?       @relation(fields: [fpoId], references: [id], onDelete: SetNull)
-  cropIdentifier String
-  quantity       Decimal    @db.Decimal(18, 3)
-  unit           String
-  status         LotStatus  @default(DRAFT)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  id                  String        @id @default(cuid())
+  lotCode             String        @unique
+  farmerId            String
+  farmer              Farmer        @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  farmId              String
+  farm                Farm          @relation(fields: [farmId], references: [id], onDelete: Restrict)
+  cropId              String
+  crop                Crop          @relation(fields: [cropId], references: [id], onDelete: Restrict)
+  fpoId               String?
+  fpo                 FPO?          @relation(fields: [fpoId], references: [id], onDelete: SetNull)
+  quantity            Decimal       @db.Decimal(18, 3)
+  quantityUnit        QuantityUnit
+  sowingDate          DateTime?
+  expectedHarvestDate DateTime?
+  actualHarvestDate   DateTime?
+  cultivationArea     Decimal?      @db.Decimal(12, 4)
+  cultivationAreaUnit AreaUnit?
+  qualityGrade        String?
+  qualityNotes        String?
+  status              LotStatus     @default(DRAFT)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
 
-  @@index([farmerId, cropIdentifier, status])
-  @@index([fpoId, cropIdentifier, status])
+  @@index([farmerId, status, createdAt])
+  @@index([farmId, status])
+  @@index([cropId, status])
   @@map("lots")
 }
 

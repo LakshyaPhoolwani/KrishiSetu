@@ -24,7 +24,7 @@ The project follows a monorepo layout with separate workspaces for the web app, 
 - Express
 - Supabase PostgreSQL
 - Prisma
-- Clerk (future)
+- Clerk
 
 ## Monorepo structure
 
@@ -112,9 +112,11 @@ database health check.
 ## Current phase
 
 Phase 2 is the Clerk authentication and authorization foundation stage. No
-production business features are implemented yet. See
+production business features are implemented yet. Phase 3 adds the backend
+Farmer/Farm/Crop/Lot foundation. See
 [docs/authentication.md](docs/authentication.md) for the backend flow and
-webhook setup.
+webhook setup and [docs/farmer-management.md](docs/farmer-management.md) for
+the Phase 3 API and ownership rules.
 
 ## Collaboration rules
 
