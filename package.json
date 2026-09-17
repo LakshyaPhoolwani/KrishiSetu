@@ -1,0 +1,37 @@
+{
+  "name": "krishisetu",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/web",
+    "apps/mobile",
+    "backend",
+    "packages/types",
+    "packages/validation",
+    "packages/api-client",
+    "packages/constants"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace apps/web",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev:mobile": "npm run start --workspace apps/mobile",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write .",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@types/node": "^24.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "prettier": "^3.6.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
